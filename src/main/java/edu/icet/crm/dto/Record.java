@@ -7,20 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import java.awt.*;
+import java.time.LocalDate;
 
-import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "medical_Records")
 public class Record {
     @Id
 
     private String recordId;
-    private String reportId;
-    private String recordType;
-    private Date recordDate;
+    //private List<String>report;
+    private LocalDate recordDate;
     private String reportStatus;
 
 }
