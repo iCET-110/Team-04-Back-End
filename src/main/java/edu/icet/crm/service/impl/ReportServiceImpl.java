@@ -27,4 +27,8 @@ public class ReportServiceImpl implements ReportService {
         return reportRepository.findById(reportId);
     }
 
+    @Override
+    public List<Report> getReportsByDate(LocalDateTime reportDate) {
+        return reportRepository.findByDate(reportDate);
+    }
 }

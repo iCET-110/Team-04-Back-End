@@ -8,5 +8,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReportRepository extends JpaRepository<ReportEntity,String>{
-
+    List<Report> findByDate(LocalDateTime reportDate);
 }
