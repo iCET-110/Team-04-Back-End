@@ -26,9 +26,6 @@ public class ReportController {
     public Optional<ReportEntity> getReportById(@PathVariable String reportId){
         return reportService.getReportById(reportId);
     }
-    @GetMapping("/{reportDate}")
-    public List<Report> getReportsByDate(@PathVariable LocalDateTime reportDate){
-        return reportService.getReportsByDate(reportDate);
-    }
+
 }
 

@@ -11,6 +11,4 @@ public interface ReportService {
     List<ReportEntity> getAllReport();
 
     Optional<ReportEntity> getReportById(String reportId);
-
-    List<Report> getReportsByDate(LocalDateTime reportDate);
 }
