@@ -1,18 +1,14 @@
 package edu.icet.crm.controller;
 
-import edu.icet.crm.service.RecordService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import edu.icet.crm.service.impl.RecordServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin
-@RequestMapping("/record")
 public class RecordController {
-    @Autowired
-    RecordService service;
 
-    @DeleteMapping("/{id}")
-    public void deleteRecord(@PathVariable String id){
-        service.deleteRecord(id);
-    }
+    final RecordServiceImpl recordService;
 }
