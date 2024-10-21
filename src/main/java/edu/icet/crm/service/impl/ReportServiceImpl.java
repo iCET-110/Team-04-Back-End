@@ -28,11 +28,6 @@ public class ReportServiceImpl implements ReportService {
                 .map(reportEntity -> new ModelMapper().map(reportEntity, Record.class))
                 .collect(Collectors.toList());
 
-
-
-        //TODO Create logic for filtering
-
-        // Filter by report ID (partial or full match)
         return records.stream()
                 .filter(record -> record.getRecordId().toLowerCase().contains(id.toLowerCase()))
                 .collect(Collectors.toList());
@@ -48,9 +43,6 @@ public class ReportServiceImpl implements ReportService {
                 .map(reportEntity -> new ModelMapper().map(reportEntity, Record.class))
                 .collect(Collectors.toList());
 
-        //TODO Create logic for filtering
-
-        // Filter by both report ID and date
         return records.stream()
                 .filter(record -> record.getRecordId().toLowerCase().contains(id.toLowerCase()) && record.getRecordDate().equals(date))
                 .collect(Collectors.toList());
@@ -63,7 +55,6 @@ public class ReportServiceImpl implements ReportService {
                 .map(reportEntity -> new ModelMapper().map(reportEntity, Record.class))
                 .collect(Collectors.toList());
 
-        //TODO Create logic for filtering
         return records.stream()
                 .filter(record -> record.getRecordDate().equals(date))
                 .collect(Collectors.toList());
