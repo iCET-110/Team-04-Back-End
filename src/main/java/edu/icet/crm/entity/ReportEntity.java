@@ -1,5 +1,7 @@
 package edu.icet.crm.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Entity
 public class ReportEntity {
+    @Id
     private String reportId;
     private String reportLink;
     private String categoryType;
