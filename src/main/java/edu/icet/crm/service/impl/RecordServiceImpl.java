@@ -8,4 +8,9 @@ import lombok.RequiredArgsConstructor;
 public class RecordServiceImpl implements RecordService {
 
     final RecordRepository recordRepository;
+
+    @Override
+    public void deleteRecord(String id) {
+        recordRepository.deleteById(id);
+    }
 }
