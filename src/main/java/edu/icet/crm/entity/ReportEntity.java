@@ -1,7 +1,6 @@
 package edu.icet.crm.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
+@Entity(name = "report")
+@Table(name = "report")
 public class ReportEntity {
     @Id
     private String reportId;
     private String reportLink;
     private String categoryType;
+
+    @ManyToMany(mappedBy = "reportList", cascade = CascadeType.ALL)
     private List<RecordEntity> recordList;
 }
