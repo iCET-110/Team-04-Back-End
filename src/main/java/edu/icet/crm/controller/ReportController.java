@@ -19,22 +19,18 @@ public class ReportController {
 
     @GetMapping("/searchById/{id}")
     public List<Record> search(@PathVariable String id) {
-        System.out.println(id);
         return reportService.search(id);
     }
 
 
     @GetMapping("/searchByIdAndDate")
     public List<Record> search( @RequestParam String id, @RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        System.out.println(id+" "+date);
         return reportService.search(id, date);
     }
 
 
     @GetMapping("/searchByDate/{date}")
     public List<Record> search( @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-
-        System.out.println("----------> "+date);
         return reportService.search(date);
     }
 
