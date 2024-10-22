@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,7 +19,7 @@ public class RecordEntity {
     @Id
     private String recordId;
     private String patientID;
-    private Date recordDate;
+    private LocalDate recordDate;
     private String description;
 
     @ManyToMany(cascade = CascadeType.ALL)
