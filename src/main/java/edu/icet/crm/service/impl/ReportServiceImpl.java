@@ -1,6 +1,5 @@
 package edu.icet.crm.service.impl;
 
-import edu.icet.crm.dto.Report;
 import edu.icet.crm.entity.ReportEntity;
 import edu.icet.crm.repository.ReportRepository;
 import edu.icet.crm.service.ReportService;

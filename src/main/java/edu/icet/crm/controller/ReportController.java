@@ -1,6 +1,5 @@
 package edu.icet.crm.controller;
 
-import edu.icet.crm.dto.Report;
 import edu.icet.crm.entity.ReportEntity;
 import edu.icet.crm.service.ReportService;
 import lombok.RequiredArgsConstructor;

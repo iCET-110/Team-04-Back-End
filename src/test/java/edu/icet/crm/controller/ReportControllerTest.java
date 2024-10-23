@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,10 +52,4 @@ class ReportControllerTest {
                 .andExpect(jsonPath("$.length()").value(5));
     }
 
-    @Test
-    void testGetReportsByDate() throws Exception {
-        LocalDate reportDate = LocalDate.of(2023, 10, 10);
-        List<ReportEntity> mockReports = List.of(new ReportEntity(), new ReportEntity());
-        when(reportService.getReportsByDate(reportDate)).thenReturn(mockReports);
-    }
 }
