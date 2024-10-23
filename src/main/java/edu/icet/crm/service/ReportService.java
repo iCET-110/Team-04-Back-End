@@ -1,7 +1,7 @@
 package edu.icet.crm.service;
 
-import edu.icet.crm.model.Report;
+import edu.icet.crm.entity.ReportEntity;
 
 public interface ReportService {
-    Report createReport(Report report);
+    ReportEntity saveReport(ReportEntity reportEntity);
 }
