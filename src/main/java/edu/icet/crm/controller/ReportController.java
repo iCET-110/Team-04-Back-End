@@ -27,7 +27,7 @@ public class ReportController {
         return reportService.getReportById(reportId);
     }
     @GetMapping("/reportDate")
-    public List<Report> getReportsById(@PathVariable LocalDate reportDate){
+    public List<Report> getReportsByDate(@PathVariable LocalDate reportDate){
         return reportService.getReportsById(reportDate);
     }
 }
