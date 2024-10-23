@@ -13,6 +13,10 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void deleteRecord(String id) {
-        recordRepository.deleteById(id);
+        if (recordRepository.existsById(id)) {
+            recordRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Record not found");
+        }
     }
 }
