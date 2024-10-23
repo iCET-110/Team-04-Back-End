@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -26,8 +27,14 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<Record> findByRecordId(String recordId) {
-        List<RecordEntity> recordEntities = recordRepository.findByRecordId(recordId);
-        return bindingRecordEntityToRecord(recordEntities);
+        List<RecordEntity> recordEntities = recordRepository.findAll();
+
+        return bindingRecordEntityToRecord(recordEntities.stream().filter(
+                recordEntity -> recordEntity.
+                        getRecordId() != null && recordEntity.getRecordId().
+                        toLowerCase().
+                        contains(recordId.toLowerCase())
+        ).collect(Collectors.toList()));
     }
 
     @Override
