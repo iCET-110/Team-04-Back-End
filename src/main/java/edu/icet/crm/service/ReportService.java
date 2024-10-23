@@ -1,6 +1,5 @@
 package edu.icet.crm.service;
 
-import edu.icet.crm.dto.Report;
 import edu.icet.crm.entity.ReportEntity;
 
 import java.time.LocalDate;
@@ -12,5 +11,5 @@ public interface ReportService {
 
     Optional<ReportEntity> getReportById(String reportId);
 
-    List<Report> getReportsById(LocalDate reportDate);
+    List<ReportEntity> getReportsByDate(LocalDate reportDate);
 }

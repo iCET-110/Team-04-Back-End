@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface ReportRepository extends JpaRepository<ReportEntity,String>{
 
-    List<Report> findByReportDate(LocalDate reportDate);
+    List<ReportEntity> findByReportDate(LocalDate reportDate);
 }

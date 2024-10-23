@@ -1,7 +1,6 @@
 package edu.icet.crm.service.impl;
 
 import edu.icet.crm.dto.Report;
-import edu.icet.crm.entity.RecordEntity;
 import edu.icet.crm.entity.ReportEntity;
 import edu.icet.crm.repository.ReportRepository;
 import edu.icet.crm.service.ReportService;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
-public class RecordServiceImplTest {
+public class ReportServiceImplTest {
 
     @Autowired
     ReportService reportService;
@@ -46,7 +45,7 @@ public class RecordServiceImplTest {
         String reportLink = "www.reportLink";
         LocalDate reportDate = LocalDate.of(2024,10,10);
         String categoryType = "Blood";
-        List<RecordEntity> recordList = null;
+
 
         ReportEntity mockReport = new ReportEntity(
                 reportId,
@@ -68,15 +67,15 @@ public class RecordServiceImplTest {
         String reportLink = "www.reportLink";
         LocalDate reportDate = LocalDate.of(2024,10,10);
         String categoryType = "Blood";
-        List<RecordEntity> recordList = null;
 
-        List<Report> mockReports = List.of(new Report(
+
+        List<ReportEntity> mockReports = List.of(new ReportEntity(
                 reportId,
                 reportLink,
                 reportDate,
                 categoryType,
                 null
-        ), new Report(
+        ), new ReportEntity(
                 reportId,
                 reportLink,
                 reportDate,
@@ -85,7 +84,7 @@ public class RecordServiceImplTest {
         ));
         when(reportRepository.findByReportDate(reportDate)).thenReturn(mockReports);
 
-        List<Report> reports = reportService.getReportsById(reportDate);
+        List<ReportEntity> reports = reportService.getReportsByDate(reportDate);
 
         assertEquals(2, reports.size());
     }
