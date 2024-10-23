@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,7 +19,7 @@ public class ReportEntity {
     @Id
     private String reportId;
     private String reportLink;
-    private LocalDateTime reportDate;
+    private LocalDate reportDate;
     private String categoryType;
 
     @ManyToMany(mappedBy = "reportList", cascade = CascadeType.ALL)

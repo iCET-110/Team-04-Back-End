@@ -7,7 +7,7 @@ import edu.icet.crm.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +25,11 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Optional<ReportEntity> getReportById(String reportId) {
         return reportRepository.findById(reportId);
+    }
+
+    @Override
+    public List<Report> getReportsById(LocalDate reportDate) {
+        return reportRepository.findByReportDate(reportDate);
     }
 
 }

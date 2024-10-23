@@ -1,10 +1,12 @@
 package edu.icet.crm.controller;
 
+import edu.icet.crm.dto.Report;
 import edu.icet.crm.entity.ReportEntity;
-import edu.icet.crm.service.impl.ReportServiceImpl;
+import edu.icet.crm.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("api/v1/report")
 public class ReportController {
 
-    final ReportServiceImpl reportService;
+    final ReportService reportService;
 
     @GetMapping("/all")
     public List<ReportEntity> getAllReport(){
@@ -23,6 +25,10 @@ public class ReportController {
     @GetMapping("/{reportId}")
     public Optional<ReportEntity> getReportById(@PathVariable String reportId){
         return reportService.getReportById(reportId);
+    }
+    @GetMapping("/reportDate")
+    public List<Report> getReportsById(@PathVariable LocalDate reportDate){
+        return reportService.getReportsById(reportDate);
     }
 }
 

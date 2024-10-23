@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -15,7 +15,7 @@ import java.util.List;
 public class Report {
     private String reportId;
     private String reportLink;
-    private LocalDateTime reportDate;
+    private LocalDate reportDate;
     private String categoryType;
     private List<Record> recordList;
 }
