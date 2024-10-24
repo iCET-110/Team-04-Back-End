@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class Report {
-    private String reportId;
+    private long reportId;
     private String reportLink;
     private String categoryType;
     private List<Record> recordList;

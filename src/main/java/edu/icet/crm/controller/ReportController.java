@@ -2,6 +2,7 @@ package edu.icet.crm.controller;
 
 import edu.icet.crm.entity.ReportEntity;
 import edu.icet.crm.service.impl.ReportServiceImpl;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,14 +29,14 @@ import java.nio.file.StandardCopyOption;
 public class ReportController {
 
     final ReportServiceImpl reportService;
+    @Getter
     final String REPORT_UPLOAD_DIR = "src/main/resources/reports/";
 
 
     @PostMapping("/add")
     public ResponseEntity<String> addReport(
             @RequestParam String note,
-            @RequestParam MultipartFile report
-            ) {
+            @RequestParam MultipartFile report) {
 
         if (report.isEmpty()) {
             // Return a 400 Bad Request with an error message
@@ -45,56 +48,71 @@ public class ReportController {
         String category;
         long patientId;
 
-
-        //extracting patient ID and report category from the pdf file name;
-        try{
-        String[] parts = reportName.split(" ");
-        category = parts[0]; // "Record"
-        String patientIdString = parts[1].replace(".pdf", "");
-        patientId = Long.parseLong(patientIdString);
-        }catch (Exception e){
+        // Extracting patient ID and report category from the PDF file name
+        try {
+            String[] parts = reportName.split(" ");
+            category = parts[0]; // "Record"
+            String patientIdString = parts[1].replace(".pdf", "");
+            patientId = Long.parseLong(patientIdString);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("please follow the correct naming Convention");
+                    .body("Please follow the correct naming convention");
         }
-        //===============
 
-        //saving the reportPDF;
+        // Saving the report PDF
         File directory = new File(REPORT_UPLOAD_DIR);
         if (!directory.exists()) {
             directory.mkdirs();
         }
 
         // Save the PDF file to the specified path
+        Path originalFilePath = Paths.get(REPORT_UPLOAD_DIR, reportName);
         try {
-            // Define the file's full path
-            Path destinationFilePath = Paths.get(REPORT_UPLOAD_DIR + reportName);
-
             // Use Files.copy() to save the file
-            Files.copy(report.getInputStream(), destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(report.getInputStream(), originalFilePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to save the file.");
         }
 
+        // Create the report entity
         ReportEntity fullReport = new ReportEntity(
                 -1L,
                 patientId,
-                "/api/v1/report/get/" +reportName,
+                "api/v1/report/download/" + reportName,
                 category,
                 note,
                 null
         );
-        reportService.saveReport(fullReport);
+
+        // Save the report and retrieve the saved report with its generated ID
+        ReportEntity savedReport = reportService.saveReport(fullReport);
+
+        // Construct new filename by appending the saved report's ID
+        String newReportName = category + " " + patientId + String.format(" R%04d",savedReport.getReportId()) + ".pdf";
+        Path newFilePath = Paths.get(REPORT_UPLOAD_DIR, newReportName);
+
+        try {
+            // Rename the file by copying to a new name and deleting the old file
+            Files.move(originalFilePath, newFilePath, StandardCopyOption.REPLACE_EXISTING);
 
 
-    return ResponseEntity.ok(report.getOriginalFilename() + " File saved to the database successfully..");
+            savedReport.setReportLink("api/v1/report/download/" + newReportName);
+            reportService.saveReport(savedReport);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to rename the file.");
+        }
 
+        return ResponseEntity.ok(report.getOriginalFilename() + " file saved to the database successfully.");
     }
 
 
-    @GetMapping("/get/{fileName}")
-    public ResponseEntity<Resource> getReport(@PathVariable String fileName) {
+
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> downloadReport(@PathVariable String fileName) {
         File file = new File(REPORT_UPLOAD_DIR, fileName);
         if (!file.exists() || !file.canRead()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -138,6 +156,17 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(null);
         }
+    }
+
+
+    @GetMapping("/all")
+    public List<ReportEntity> getAllReports(){
+        return reportService.getAllReports();
+    }
+
+    @GetMapping("/{reportId}")
+    public Optional<ReportEntity> getAllReports(@PathVariable long reportId){
+        return reportService.getReport(reportId);
     }
 
 }
